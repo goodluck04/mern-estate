@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-export default function SignIn() {
+import { useDispatch, useSelector } from "react-redux";
+import { signInSart, signInSuccess, signInFailure } from "../redux/user/userSlice";
+ 
+export default function SignIn() { 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const {loading, error } = useSelector((state) => state.user);
 
   const handleChange = (e) => {
     setFormData({
@@ -17,7 +19,7 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signInSart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -26,21 +28,18 @@ export default function SignIn() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if(data.success === false) {
-        setError(data.message);
-        setLoading(false);
+      if (data.success === false) {
+        dispatch(signInFailure(data.message));
         return;
       }
       // if data.success === true
-      setLoading(false)
-      setError(null);
-      navigate("/")
+      dispatch(signInSuccess(data))
+      navigate("/");
     } catch (error) {
-      setLoading(error.message)
-      setLoading(false)
+      dispatch(signInFailure(error.message))
     }
     // console.log(data);
-  };  
+  };
 
   // console.log(formData);
 
@@ -48,9 +47,8 @@ export default function SignIn() {
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Sign Ip</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        
         <input
-        required
+          required
           type="email"
           name=""
           id="email"
@@ -59,7 +57,7 @@ export default function SignIn() {
           onChange={handleChange}
         />
         <input
-        required
+          required
           type="password"
           name=""
           id="password"
@@ -67,7 +65,10 @@ export default function SignIn() {
           className="border p-3 rounded-lg"
           onChange={handleChange}
         />
-        <button disabled={loading} className=" bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+        <button
+          disabled={loading}
+          className=" bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+        >
           {loading ? "Loading" : "Sign up"}
         </button>
       </form>
