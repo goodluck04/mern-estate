@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
+import cookieParser from "cookie-parser";
 
 
 
@@ -20,6 +21,10 @@ const app = express();
 //  by default we are not allowed send json data to the server
 // so we use middleware to parse json 
 app.use(express.json());
+
+// 
+app.use(cookieParser());
+
 
 
 
