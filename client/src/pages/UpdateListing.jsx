@@ -8,7 +8,7 @@ import {
 import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect } from 'react'; 
 
 export default function UpdateListing() {
   const { currentUser } = useSelector((state) => state.user);
