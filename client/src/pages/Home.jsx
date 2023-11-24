@@ -13,7 +13,7 @@ export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
-  console.log(offerListings);
+  // console.log(offerListings);
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {

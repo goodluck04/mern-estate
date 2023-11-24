@@ -37,12 +37,14 @@ app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
 
 // static folder of client  (in case creat-react-app dist will be build name instead)
-app.use(express.static(path.join(__dirname, "/client/dist")));
 
-// route error handling for unknown routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
+
+
 
 // middle ware for error handling  use as next(error) in catch block
 app.use((err, req, res, next) => {
