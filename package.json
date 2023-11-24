@@ -9,6 +9,9 @@
     "start": "node api/index.js",
     "build": "npm install && npm install --prefix client && npm run build --prefix client"
   },
+  "engines": {
+    "node": ">=18.18.0 <20.10.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
